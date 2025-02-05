@@ -151,7 +151,7 @@ const drawGrid = (c, r, cols, rows, get) => {
         tile0Ctx.canvas,
         tile1Ctx.canvas,
 
-        tile1Ctx.canvas,
+        tile1Ctx.canvas, 
         tile2Ctx.canvas,
         tile2Ctx.canvas
       ];
