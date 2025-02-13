@@ -1,0 +1,62 @@
+body {
+    background-image: url('avs.jpg'); /* Replace with your image path */
+    background-size: cover; /* Ensures the image covers the entire viewport */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    height: 100vh; /* Full height of the viewport */
+    margin: 0;
+}
+
+.maroon-box {
+    background: linear-gradient(to right, rgb(110, 0, 0), rgb(193, 2, 2)); /* Dark to lighter maroon */
+    width: 15vw; /* Adjust width as needed */
+    height: 10vw; /* Adjust height as needed */
+    position: fixed;
+    bottom: 5vw; /* Distance from the bottom */
+    left: 30%;
+    transform: translateX(-50%); /* Centers the box horizontally */
+    border-radius: 2vw; /* Rounded corners */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 3vw;
+    font-weight: bold;
+    text-align: center;
+}
+
+.blue-box {
+    background: linear-gradient(to right, rgb(0, 0, 159), rgb(1, 126, 203)); /* Dark to lighter blue transition */
+    width: 15vw; /* Adjust width as needed */
+    height: 10vw; /* Adjust height as needed */
+    position: fixed;
+    bottom: 5vw; /* Distance from the bottom */
+    left: 70%;
+    transform: translateX(-50%);
+    border-radius: 2vw; /* Rounded corners */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 3vw;
+    font-weight: bold;
+    text-align: center;
+}
+
+.time-box{
+    background-color: rgba(0, 0, 0, 0.323);
+    width: 20vw; /* Adjust width as needed */
+    height: 8vw; /* Adjust height as needed */
+    position: fixed;
+    bottom: 5vw; /* Distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2vw; /* Rounded corners */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 3vw;
+    font-weight: bold;
+    text-align: center;
+}
