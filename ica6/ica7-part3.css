@@ -1,0 +1,44 @@
+/* Default styles */
+#narrowScreen {
+    background-color: green;
+}
+
+#wideScreen {
+    background-color: red;
+}
+
+#shortScreen {
+    background-color: turquoise;
+}
+
+#tallScreen {
+    background-color: lavender;
+}
+
+/* Narrow screen: Less than 600px */
+@media (max-width: 599px) {
+    #narrowScreen {
+        background-color: purple;
+    }
+}
+
+/* Wide screen: More than 800px */
+@media (min-width: 801px) {
+    #wideScreen {
+        background-color: lightblue;
+    }
+}
+
+/* Short screen: Less than 500px */
+@media (max-height: 499px) {
+    #shortScreen {
+        background-color: yellow;
+    }
+}
+
+/* Tall screen: More than 800px */
+@media (min-height: 801px) {
+    #tallScreen {
+        background-color: orange;
+    }
+}
