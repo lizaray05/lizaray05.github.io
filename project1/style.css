@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'DuneRise'; /* Name of the font */
+    src: url('Dune_Rise.ttf') format('truetype'); /* List of font file types */
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,39 +12,54 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Avenir', sans-serif;
     background: #111;
     color: #eaeaea;
     line-height: 1.6;
     margin: 0;
+    display: grid; /* Use Grid layout */
+    grid-template-columns: 1fr; /* Single column layout */
+    grid-template-rows: auto 1fr auto; /* Header, main content, and footer */
+    min-height: 100vh; /* Ensure body takes full height */
 }
 
 header {
-    text-align: center;
+    display: grid; /* Use Grid for header */
+    justify-items: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
     padding: 40px 0;
-    background: linear-gradient(45deg, #ff006e, #5c2e91);
+    background: linear-gradient(45deg, #111, #111);
     color: white;
     text-transform: uppercase;
+    text-align: center; /* Ensure the text is centered within the header */
 }
 
 h1 {
+    font-family: 'DuneRise', sans-serif;
     font-size: 3rem;
     letter-spacing: 5px;
+    margin: 20px; /* Remove any default margin for proper centering */
 }
 
 h2 {
     font-size: 1.5rem;
     font-weight: lighter;
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 0; /* Remove any default margin for proper centering */
 }
 
 main {
+    display: grid; /* Use Grid for main content */
+    grid-template-columns: 1fr; /* Single column layout for main content */
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
+    grid-row: 2; /* Place main content in the second row */
 }
 
 section {
+    display: grid; /* Use Grid inside each section */
+    grid-template-columns: 1fr; /* Single column layout for sections */
     background: rgba(255, 255, 255, 0.1);
     margin: 20px 0;
     padding: 30px;
@@ -47,14 +69,15 @@ section {
 }
 
 h3 {
+    font-family: 'DuneRise', sans-serif;
     font-size: 2rem;
-    color: #ff006e;
+    color: #6CC417;
     text-transform: uppercase;
     margin-bottom: 15px;
 }
 
 strong {
-    color: #00ff99;
+    color: #ffffff;
 }
 
 p {
@@ -69,11 +92,14 @@ hr {
 }
 
 footer {
-    text-align: center;
+    display: grid; /* Use Grid for footer */
+    justify-items: center; /* Center footer text horizontally */
+    align-items: center; /* Center footer text vertically */
     padding: 20px 0;
     background: #111;
     color: white;
     font-size: 0.9rem;
+    grid-row: 3; /* Place footer in the third row */
 }
 
 
