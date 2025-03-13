@@ -60,7 +60,7 @@ main {
 section {
     display: grid; /* Use Grid inside each section */
     grid-template-columns: 1fr; /* Single column layout for sections */
-    background: rgba(255, 255, 255, 0.1);
+    background: #11111106;
     margin: 20px 0;
     padding: 30px;
     border-radius: 8px;
@@ -102,4 +102,23 @@ footer {
     grid-row: 3; /* Place footer in the third row */
 }
 
+.stardate{
+    font-size: 1.2em;
+}
 
+.time
+{
+    font-size: 1.2em;
+}
+
+.conductor{
+    font-size: 1.2em;
+}
+
+.repertoire{
+    font-size: 1.2em;
+}
+
+.location{
+    font-size: 1.2em;
+}
