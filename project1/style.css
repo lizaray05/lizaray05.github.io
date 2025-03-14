@@ -28,7 +28,7 @@ header {
     justify-items: center; /* Center content horizontally */
     align-items: center; /* Center content vertically */
     padding: 40px 0;
-    background: linear-gradient(45deg, #111, #111);
+    background: linear-gradient(45deg, #111, #430d4b);
     color: white;
     text-transform: uppercase;
     text-align: center; /* Ensure the text is centered within the header */
@@ -65,19 +65,19 @@ section {
     padding: 30px;
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 15px rgb(245, 213, 224);
 }
 
 h3 {
     font-family: 'DuneRise', sans-serif;
     font-size: 2rem;
-    color: #6CC417;
+    color: #f5d5e0;
     text-transform: uppercase;
     margin-bottom: 15px;
 }
 
 strong {
-    color: #ffffff;
+    color: #7b337d;
 }
 
 p {
