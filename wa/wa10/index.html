@@ -1,55 +1,100 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Silly story generator</title>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Silly Story Generator</title>
     <style>
       body {
-        font-family: helvetica, sans-serif;
-        width: 350px;
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f8ff;
+        margin: 0;
+        color: #333;
+        padding: 20px;
       }
 
-      label {
-        font-weight: bold;
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #2e8b57;
       }
 
       div {
-        padding-bottom: 20px;
+        margin: 15px 0;
+      }
+
+      label {
+        font-size: 1.2em;
+        font-weight: bold;
       }
 
       input[type="text"] {
-        padding: 5px;
-        width: 150px;
+        padding: 10px;
+        width: 250px;
+        font-size: 1em;
+        border-radius: 8px;
+        border: 2px solid #aaa;
+        margin-top: 5px;
       }
 
-      p {
-        background: #ffc125;
-        color: #5e2612;
-        padding: 10px;
+      .radio-container {
+        margin: 10px 0;
+      }
+
+      input[type="radio"] {
+        transform: scale(1.2);
+      }
+
+      button.randomize {
+        background-color: #2e8b57;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button.randomize:hover {
+        background-color: #1e6f3d;
+      }
+
+      .story {
+        background-color: #add8e6;
+        color: #333;
+        padding: 20px;
+        margin-top: 30px;
+        border-radius: 12px;
+        font-size: 1.2em;
         visibility: hidden;
       }
     </style>
   </head>
 
   <body>
+    <h1>Silly Story Generator</h1>
+    
     <div>
       <label for="customname">Enter custom name:</label>
-      <input id="customname" type="text" placeholder="" />
+      <input id="customname" type="text" placeholder="Enter a name" />
     </div>
-    <div>
+
+    <div class="radio-container">
       <label for="us">US</label>
       <input id="us" type="radio" name="ukus" value="us" checked />
+      
       <label for="uk">UK</label>
       <input id="uk" type="radio" name="ukus" value="uk" />
     </div>
+
     <div>
       <button class="randomize">Generate random story</button>
     </div>
+
     <p class="story"></p>
 
-    <!-- Link to external JavaScript file -->
     <script src="main.js"></script>
   </body>
 </html>
+
