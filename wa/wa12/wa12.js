@@ -53,8 +53,8 @@ function getRandomQuote() {
     authorTextElement.textContent = `— ${author}`;
 
     if (authorImages[author]) {
-      authorImage.src = authorImages[author];  // Dynamically set the image source
-      authorImage.style.display = 'block';  // Make the image visible
+      authorImage.src = authorImages[author];  // Dynamically sets the image source
+      authorImage.style.display = 'block';
     }
 
     loadingSpinner.style.display = 'none';
