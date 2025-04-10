@@ -55,6 +55,8 @@ function getRandomQuote() {
     if (authorImages[author]) {
       authorImage.src = authorImages[author];
       authorImage.style.display = 'block';
+    } else {
+      authorImage.style.display = 'none';
     }
 
     loadingSpinner.style.display = 'none';
