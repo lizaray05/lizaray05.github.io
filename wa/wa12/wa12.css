@@ -3,9 +3,7 @@ html {
   scroll-behavior: smooth;
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
@@ -110,9 +108,5 @@ footer {
   .button {
     font-size: 16px;
   }
-
-  .app {
-    width: 95%;
-    padding-bottom: 20px;
-  }
 }
+
