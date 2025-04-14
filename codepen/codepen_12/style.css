@@ -1,0 +1,87 @@
+body {
+  min-height: 100vh;
+  font-family: 'Fredoka One', 'Comic Neue', cursive, sans-serif; /* Fun, bold font */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff6bdb, #9c4dff); /* Pink to purple gradient */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.v-badge {
+  position: relative;
+  text-decoration: none;
+  padding: 12px 24px; /* Slightly larger for playful vibe */
+  color: white;
+  font-weight: 600;
+  font-size: 1.1em; /* Bigger text */
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom, #ff8aed, #c86bfa); /* Lighter pink-purple */
+  border-radius: 999px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  transition: all 0.3s ease; /* Bouncy hover effect */
+}
+
+.v-badge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.v-badge span {
+  width: 30px; /* Slightly larger decoration */
+  height: 30px;
+  position: absolute;
+  top: -15px;
+  right: -5px;
+  transform: rotate(-20deg);
+  filter: blur(0.5px);
+}
+
+.v-badge span:before, 
+.v-badge span:after {
+  content: "";
+  position: absolute;
+}
+
+.v-badge span:before {
+  width: 2px; /* Thicker highlight */
+  height: 100%;
+  left: 15px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.9), transparent);
+}
+
+.v-badge span:after {
+  width: 100%;
+  height: 2px;
+  top: 15px;
+  background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.9), transparent);
+}
+
+.v-badge:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  background: linear-gradient(30deg, #ffa3f0 60%, white); /* Brighter pink glow */
+  top: -2px; /* Thicker outline */
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  border-radius: 999px;
+}
+
+.inspired {
+  position: absolute;
+  bottom: 8%;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.inspired:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
