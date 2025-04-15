@@ -1,178 +1,338 @@
-function _extends() {_extends = Object.assign || function (target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i];for (var key in source) {if (Object.prototype.hasOwnProperty.call(source, key)) {target[key] = source[key];}}}return target;};return _extends.apply(this, arguments);}import React from "https://esm.sh/react@18.3.1";
-import ReactDOM from "https://esm.sh/react-dom@18.3.1";
-
-import gsap from "https://esm.sh/gsap";
-import { useGSAP } from "https://esm.sh/@gsap/react?deps=react@18.3.1";
-gsap.registerPlugin(MorphSVGPlugin);
-const { useRef, useState } = React;
-const style = window.getComputedStyle(document.body);
-
-const Divider = props => {
-  const { contextSafe } = useGSAP({ scope: props.scope.current });
-  const colon = useRef();
-
-  useGSAP((context, contextSafe) => {
-    gsap.to(colon.current, {
-      opacity: 0,
-      repeat: -1,
-      yoyo: true,
-      duration: 0.5,
-      ease: 'none' });
-
-  });
-
-  return /*#__PURE__*/(
-    React.createElement(React.Fragment, null, /*#__PURE__*/
-    React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: "360", viewBox: "0 0 800 800",
-      className: "dividerSVG" }, /*#__PURE__*/
-
-
-    React.createElement("defs", null, /*#__PURE__*/
-    React.createElement("linearGradient", {
-      id: "a",
-      x1: 400,
-      y1: 0,
-      x2: 400,
-      y2: 800,
-      gradientUnits: "userSpaceOnUse" }, /*#__PURE__*/
-
-    React.createElement("stop", { offset: 0, stopColor: style.getPropertyValue('--grad') }), /*#__PURE__*/
-    React.createElement("stop", { offset: 0.5, stopColor: "#fff", stopOpacity: 0 }), /*#__PURE__*/
-    React.createElement("stop", { offset: 1, stopColor: style.getPropertyValue('--grad') }))), /*#__PURE__*/
-
-
-
-    React.createElement("path", { ref: colon, d: "M555.56,800H244.44v-311.11h311.11v311.11ZM555.56,311.11H244.44S244.44,0,244.44,0h311.11v311.11Z", fill: style.getPropertyValue('--grad'), opacity: 0.5 }))));
-
-
-
-
-
-};
-const TimeNumber = props => {
-
-  const [delay, setDelay] = useState(0.1);
-  const [time, setTime] = useState(new Date());
-  const { contextSafe } = useGSAP({ scope: props.scope.current });
-  const pathArr = [
-  { path1: "M640 400H150V160h490v240z",
-    path2: "M640 640H150V400h490v240z" },
-  { path2: "M320 640H0V160h320v480z",
-    path1: "M800 640H480V0h320v640z" },
-  { path1: "M640 320H0V160h640v160z",
-    path2: "M800 640H160V480h640v160z" },
-  { path1: "M640 320H0V160h640v160z",
-    path2: "M640 640H0V480h640v160z" },
-  { path1: "M640 320H160V0h480v320z",
-    path2: "M640 800H0V480h640v320z" },
-  { path1: "M800 320H160V160h640v160z",
-    path2: "M640 640H0V480h640v160z" },
-  { path1: "M800 320H160V160h640v160z",
-    path2: "M640 640H160V480h480v160z" },
-  { path1: "M640 480H0V160h640v320z",
-    path2: "M640 800H0V480h640v320z" },
-  { path1: "M640 320H160V160h480v160z",
-    path2: "M640 640H160V480h480v160z" },
-  { path1: "M640 320H160V160h480v160z",
-    path2: "M640 640H0V480h640v160z" }];
-
-
-  const barPath1 = useRef();
-  const barPath2 = useRef();
-
-  const timer = gsap.delayedCall(1, () => setTime(new Date()));
-
-  useGSAP((context, contextSafe) => {
-
-    let h1 = time.getHours().toString().length < 2 ? 0 : time.getHours().toString()[0];
-    let h2 = time.getHours().toString().length < 2 ? time.getHours() : time.getHours().toString()[1];
-    let m1 = time.getMinutes().toString().length < 2 ? 0 : time.getMinutes().toString()[0];
-    let m2 = time.getMinutes().toString().length < 2 ? time.getMinutes() : time.getMinutes().toString()[1];
-    //console.log(h1, h2, m1, m2);
-    let timeNow = `${h1}${h2}${m1}${m2}`;
-    let target1 = pathArr[timeNow[props.id]].path1;
-    let target2 = pathArr[timeNow[props.id]].path2;
-
-
-
-    gsap.to(barPath1.current, {
-      morphSVG: {
-        shape: target1 },
-
-      delay: props.id * delay,
-      duration: 1,
-      ease: 'expo.inOut' });
-
-    gsap.to(barPath2.current, {
-      morphSVG: {
-        shape: target2 },
-
-      delay: props.id * delay,
-      duration: 1,
-      ease: 'expo.inOut' });
-
-
-  }, { dependencies: [time], scope: props.scope.current });
-
-  return /*#__PURE__*/(
-    React.createElement("svg", {
-      className: "mainSVG",
-      xmlns: "http://www.w3.org/2000/svg",
-      viewBox: "0 0 800 800" }, /*#__PURE__*/
-
-    React.createElement("defs", null, /*#__PURE__*/
-    React.createElement("linearGradient", {
-      id: "a",
-      x1: 400,
-      y1: 0,
-      x2: 400,
-      y2: 800,
-      gradientUnits: "userSpaceOnUse" }, /*#__PURE__*/
-
-    React.createElement("stop", { offset: 0, stopColor: style.getPropertyValue('--grad') }), /*#__PURE__*/
-    React.createElement("stop", { offset: 0.5, stopColor: "#fff", stopOpacity: 0 }), /*#__PURE__*/
-    React.createElement("stop", { offset: 1, stopColor: style.getPropertyValue('--grad') }))), /*#__PURE__*/
-
-
-
-    React.createElement("path", { d: "M800 800H0V0h800v800z", fill: style.getPropertyValue('--grad') }), /*#__PURE__*/
-    React.createElement("path", { d: "M800 800H0V0h800v800z", fill: "url(#a)" }), /*#__PURE__*/
-    React.createElement("path", { ref: barPath1, d: "M800 800H0V0h800v800z", fill: style.getPropertyValue('--bg') }), /*#__PURE__*/
-    React.createElement("path", { ref: barPath2, d: "M800 800H0V0h800v800z", fill: style.getPropertyValue('--bg') }), /*#__PURE__*/
-    React.createElement("path", { d: "M800 800H0V0h800v800z", fill: "transparent", stroke: style.getPropertyValue('--bg'), strokeWidth: "42" })));
-
-
-};
-
-const MainTime = props => {
-  //console.log(props)
-  let list = [];
-  for (let i = 0; i < 4; i++) {
-    if (i == 2) {
-      list.push( /*#__PURE__*/React.createElement(Divider, props));
-    }
-    list.push( /*#__PURE__*/React.createElement(TimeNumber, _extends({ id: i, key: i }, props)));
-  }
-  return /*#__PURE__*/(
-    React.createElement(React.Fragment, null,
-    list));
-
-
-};
-function App() {
-
-  const container = useRef();
-
-  return /*#__PURE__*/(
-    React.createElement("div", { className: "App" }, /*#__PURE__*/
-    React.createElement("div", { className: "container",
-      ref: container }, /*#__PURE__*/
-
-    React.createElement(MainTime, { scope: container }))));
-
-
-
+const isNum = x => typeof x === 'number'
+const px = n => `${n}px`
+const getPagePos = (e, param) =>
+e.targetTouches ? e.touches[0][`page${param}`] : e[`page${param}`]
+const randomN = n => {
+  return Math.round(-n - 0.5 + Math.random() * (2 * n + 1))
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render( /*#__PURE__*/React.createElement(App, null));
+const wrapper = document.querySelector('.wrapper')
+
+const addEvents = (target, event, action, array) => {
+  array.forEach(a => target[`${event}EventListener`](a, action))
+}
+
+const mouse = {
+  up: (t, e, a) => addEvents(t, e, a, ['mouseup', 'touchend']),
+  move: (t, e, a) => addEvents(t, e, a, ['mousemove', 'touchmove']),
+  down: (t, e, a) => addEvents(t, e, a, ['mousedown', 'touchstart']),
+  enter: (t, e, a) => addEvents(t, e, a, ['mouseenter', 'touchstart']),
+  leave: (t, e, a) => addEvents(t, e, a, ['mouseleave', 'touchmove']),
+}
+
+class Vector {
+  constructor(props) {
+    Object.assign(this, {
+      x: 0,
+      y: 0,
+      ...props,
+    })
+  }
+  get magnitude() {
+    return Math.sqrt(this.x * this.x + this.y * this.y)
+  }
+  setLength(length) {
+    const angle = Math.atan2(this.y, this.x)
+    this.x = Math.cos(angle) * length
+    this.y = Math.sin(angle) * length
+  }
+  setXy(xy) {
+    this.x = xy.x
+    this.y = xy.y
+  }
+  addXy(xy) {
+    this.x += xy.x
+    this.y += xy.y
+  }
+  subtractXy(xy) {
+    this.x -= xy.x
+    this.y -= xy.y
+  }
+  multiplyXy(n) {
+    this.x *= n
+    this.y *= n
+  }
+}
+
+class WorldObject {
+  constructor(props) {
+    Object.assign(this, {
+      zOffset: 90,
+      moveWithTransform: true,
+      x: 0, y: 0,
+      offset: { x: null, y: null },
+      pos: new Vector({ x: props.x, y: props.y }),
+      size: { w: 0, h: 0 },
+      maxSize: { w: 0, h: 0 },
+      ...props,
+    })
+    this.addToWorld()
+  }
+  get rect() {
+    const { left, top } = this.el.getBoundingClientRect()
+    return {
+      left,
+      top
+    }
+  }
+  get distPos() {
+    const { size: { w, h } } = this
+    return {
+      x: this.rect.left + (w / 2),
+      y: this.rect.top + (h / 2)
+    }
+  }
+  setOffset() {
+    const { offset: { x, y } } = this
+    if (isNum(this.offset.x) && isNum(this.offset.y)) {
+      this.el.style.setProperty('--offset-x', px(x))
+      this.el.style.setProperty('--offset-y', px(y))
+    }
+  }
+  setSize(target = this) {
+    const { size: { w, h }, maxSize: { w: mW, h: mH } } = target
+    this.el.style.setProperty('--w', px(w))
+    this.el.style.setProperty('--h', px(h))
+    this.el.style.setProperty('--max-w', px(mW))
+    this.el.style.setProperty('--max-h', px(mH))
+  }
+  setStyles() {
+    const { pos: { x, y }, z } = this
+    Object.assign(this.el.style, {
+      left: px(x || 0),
+      top: px(y || 0),
+    })
+    this.el.style.zIndex = z || 0
+    this.el.style.transformOrigin = isNum(this.offset.x) & isNum(this.offset.y)
+      ? `${this.offset.x}px ${this.offset.y}px`
+    : `center`
+  }
+  distanceBetween(target) {
+    return Math.round(
+      Math.sqrt(
+        Math.pow(target.distPos.x - this.distPos.x, 2) + Math.pow(target.distPos.y - this.distPos.y, 2)
+      )
+    )
+  }
+  addToWorld() {
+    this.setSize()
+    this.setOffset()
+    if (!this.noPos) this.setStyles()
+    this.container.appendChild(this.el)
+  }
+}
+
+class Crumbs extends WorldObject {
+  constructor(props) {
+    super({
+      el: Object.assign(document.createElement('div'), { className: `${props.type}-crumbs object` }),
+      x: 0, y: 0,
+      container: wrapper,
+      ...props,
+    })
+    setTimeout(()=> {
+      this.el.remove()
+      this.food.crumbs = null 
+    }, 1000)
+  }
+}
+
+class Food extends WorldObject {
+  constructor(props) {
+    super({
+      el: Object.assign(document.createElement('div'), { className: `food ${props.type} object` }),
+      x: 0, y: 0,
+      grabPos: { a: { x: 0, y: 0 }, b: { x: 0, y: 0 } },
+      container: wrapper,
+      eatCount: 0,
+      eatInterval: null,
+      ...props,
+    })
+    this.addDragEvent()
+    this.setPos()
+  }
+  touchPos(e) {
+    return {
+      x: getPagePos(e, 'X'),
+      y: getPagePos(e, 'Y'),
+    }
+  }
+  addDragEvent() {
+    mouse.down(this.el, 'add', this.onGrab)
+  }
+  drag = (e, x, y) => {
+    if (e.type[0] === 'm') e.preventDefault()
+    this.grabPos.a.x = this.grabPos.b.x - x
+    this.grabPos.a.y = this.grabPos.b.y - y
+    this.pos.subtractXy(this.grabPos.a)
+    this.setStyles()
+  }
+  onGrab = e => {
+    this.grabPos.b = this.touchPos(e)
+    mouse.up(document, 'add', this.onLetGo)
+    mouse.move(document, 'add', this.onDrag)
+  }
+  onDrag = e => {
+    const { x, y } = this.touchPos(e)
+    if (this.canMove) this.drag(e, x, y)
+
+    this.grabPos.b.x = x
+    this.grabPos.b.y = y
+  }
+  onLetGo = () => {
+    mouse.up(document, 'remove', this.onLetGo)
+    mouse.move(document, 'remove', this.onDrag)
+  }
+  eat() {
+    if (!this.eatInterval) {
+      this.eatInterval = setInterval(()=> {
+        if (this.eatCount < 5) {
+          this.crumbs = new Crumbs({
+            type: this.type,
+            size: { w: 0, h: 0 },
+            maxSize: { w: 40, h: 40 },
+            x: this.distPos.x + randomN(10),
+            y: this.pos.y + randomN(10),
+            food: this
+          })
+          this.eatCount++
+          this.el.className = `food ${this.type} ${this.type}-eaten-${this.eatCount} object`
+        } else {
+          this.el.remove()
+          this.bear.food = null
+          clearInterval(this.eatInterval)
+          this.eatInterval = null
+          this.bear.el.className = 'bear object grow'
+          this.bear.grow()
+        }
+      }, 500)
+    }
+  }
+  setPos() {
+    const { width, height } = wrapper.getBoundingClientRect()
+    this.pos.setXy({
+      x: width / 2 - 36,
+      y: height - (height > 400 ? 200 : 100),
+    })
+    this.setStyles()
+  }
+}
+
+class Bear extends WorldObject {
+  constructor(props) {
+    super({
+      ...props,
+      canMove: true,
+      type: 'bear',
+      el: Object.assign(document.createElement('div'), {
+        className: 'bear object',
+        innerHTML: `
+            <div class="ears">
+              <div class="inner-ears">
+                <div class="ear round"></div>
+                <div class="ear round"></div>
+              </div>
+            </div>
+            <div class="face">
+              <div class="inner-face">
+                <div class="eye"></div>
+                <div class="nose"></div>
+                <div class="eye"></div>
+              </div>
+              <div class="cheeks">
+                <div class="cheek-wrapper flex-center"></div>
+                <div class="mouth-wrapper flex-center"></div>
+                <div class="cheek-wrapper flex-center"></div>
+              </div>
+            </div>
+            <div class="limbs">
+              <div class="hands">
+                <div class="hand"></div>
+                <div class="hand flip"></div>
+              </div>
+              <div class="feet">
+                <div class="foot round"></div>
+                <div class="foot round"></div>
+              </div>
+            </div>
+          `,
+      })
+    })
+
+    const cheekWrappers = this.el.querySelectorAll('.cheek-wrapper')
+    const mouthWrapper = this.el.querySelector('.mouth-wrapper')
+
+    this.cheeks = [0, 1].map((i)=> new WorldObject({
+      el: Object.assign(document.createElement('div'), { className: 'cheek round object' }),
+      container: cheekWrappers[i],
+      body: this,
+      size: { w: 0, h: 0 },
+      maxSize: { w: 40, h: 40 },
+      noPos: true,
+    }))
+    this.mouth = new WorldObject({
+      el: Object.assign(document.createElement('div'), { className: 'mouth object flex-center' }),
+      container: mouthWrapper,
+      body: this,
+      size: { w: 20, h: 0 },
+      maxSize: { w: 40, h: 30 },
+      noPos: true,
+    })
+
+    mouse.move(document, 'add', () => {
+      if (this.food) {
+        if (this.mouth.distanceBetween(this.food) < 50) {
+          this.el.classList.add('eating')
+          wrapper.classList.remove('show-message')
+          this.food.eat()
+        } else {
+          this.el.classList.remove('eating')
+          clearInterval(this.food.eatInterval)
+          this.food.eatInterval = null
+        }
+      }
+    })
+
+    this.createFood()
+
+    window.addEventListener('resize', ()=> {
+      if (this.food) this.food.setPos()
+    })
+  }
+  grow() {
+    this.el.className = 'bear object grow'
+
+    setTimeout(()=> {
+      this.el.classList.add('cheek-shrink')
+      setTimeout(()=> {
+        this.el.classList.remove ('cheek-shrink')
+        this.createFood()
+      }, 1000)
+    }, 1000)
+
+    setTimeout(()=> {
+      this.size = { ...this.maxSize }
+      this.maxSize = {
+        w: this.size.w + 20,
+        h: this.size.h + 10
+      }
+      this.el.classList.remove('grow')
+      this.setSize()
+    }, 1500)
+  }
+  createFood() {
+    this.food = new Food({ 
+      type: 'donut', 
+      size: { w: 72, h: 54 }, 
+      canMove: true, 
+      bear: this 
+    })
+  }
+}
+
+new Bear({
+  container: wrapper, 
+  size: { w: 70, h: 90 },
+  maxSize: { w: 90, h: 100 },
+  offset: { x: null, y: null },
+})
