@@ -1,137 +1,167 @@
+// setup canvas
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
-// Initialize canvas size
-function initCanvasSize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-initCanvasSize();
+let width = (canvas.width = window.innerWidth);
+let height = (canvas.height = window.innerHeight);
 
-// Handle window resize
-let resizeTimeout;
-window.addEventListener("resize", () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        initCanvasSize();
-        repositionBalls();
-    }, 100);
-});
-
+// function to generate random number
 function random(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// function to generate random color
 function randomRGB() {
-    return `rgb(${random(0, 255)} ${random(0, 255)} ${random(0, 255)})`;
+  return `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`;
 }
 
+// Ball class
 class Ball {
-    constructor(x, y, velX, velY, color, size) {
-        this.x = x;
-        this.y = y;
-        this.velX = velX;
-        this.velY = velY;
-        this.color = color;
-        this.size = size;
-        this.originalSize = size; // Store original size for responsive scaling
+  constructor(x, y, velX, velY, color, size) {
+    this.x = x;
+    this.y = y;
+    this.velX = velX;
+    this.velY = velY;
+    this.color = color;
+    this.size = size;
+    this.mass = size; // Mass proportional to size for physics calculations
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+
+  update() {
+    // Wall collision detection
+    if (this.x + this.size >= width) {
+      this.velX = -this.velX;
+      this.x = width - this.size;
     }
 
-    draw() {
-        ctx.beginPath();
-        ctx.fillStyle = this.color;
-        ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-        ctx.fill();
+    if (this.x - this.size <= 0) {
+      this.velX = -this.velX;
+      this.x = this.size;
     }
 
-    update() {
-        if (this.x + this.size >= canvas.width) {
-            this.velX = -Math.abs(this.velX); // Ensure it bounces inward
-        }
-
-        if (this.x - this.size <= 0) {
-            this.velX = Math.abs(this.velX); // Ensure it bounces inward
-        }
-
-        if (this.y + this.size >= canvas.height) {
-            this.velY = -Math.abs(this.velY); // Ensure it bounces inward
-        }
-
-        if (this.y - this.size <= 0) {
-            this.velY = Math.abs(this.velY); // Ensure it bounces inward
-        }
-
-        this.x += this.velX;
-        this.y += this.velY;
+    if (this.y + this.size >= height) {
+      this.velY = -this.velY;
+      this.y = height - this.size;
     }
 
-    collisionDetect() {
-        for (const ball of balls) {
-            if (this !== ball) {
-                const dx = this.x - ball.x;
-                const dy = this.y - ball.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < this.size + ball.size) {
-                    ball.color = this.color = randomRGB();
-                }
-            }
-        }
+    if (this.y - this.size <= 0) {
+      this.velY = -this.velY;
+      this.y = this.size;
     }
+
+    // Update position
+    this.x += this.velX;
+    this.y += this.velY;
+  }
+
+  collisionDetect() {
+    for (const ball of balls) {
+      if (this !== ball) {
+        const dx = this.x - ball.x;
+        const dy = this.y - ball.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Check for collision
+        if (distance < this.size + ball.size) {
+          // Change colors as before
+          ball.color = this.color = randomRGB();
+          
+          // Collision resolution using physics principles
+          // 1. Calculate collision normal
+          const nx = dx / distance;
+          const ny = dy / distance;
+          
+          // 2. Calculate relative velocity
+          const vx = this.velX - ball.velX;
+          const vy = this.velY - ball.velY;
+          
+          // 3. Calculate relative velocity along normal
+          const relativeVelocity = vx * nx + vy * ny;
+          
+          // 4. Do nothing if objects are moving away from each other
+          if (relativeVelocity > 0) {
+            return;
+          }
+          
+          // 5. Calculate impulse (simplified elastic collision)
+          const impulse = 2 * relativeVelocity / (this.mass + ball.mass);
+          
+          // 6. Apply impulse to velocities
+          this.velX -= impulse * ball.mass * nx;
+          this.velY -= impulse * ball.mass * ny;
+          ball.velX += impulse * this.mass * nx;
+          ball.velY += impulse * this.mass * ny;
+          
+          // 7. Adjust positions to prevent sticking (move balls apart)
+          const overlap = this.size + ball.size - distance;
+          const adjustX = (overlap * 0.5) * nx;
+          const adjustY = (overlap * 0.5) * ny;
+          
+          this.x += adjustX;
+          this.y += adjustY;
+          ball.x -= adjustX;
+          ball.y -= adjustY;
+        }
+      }
+    }
+  }
 }
 
+// Create balls
 const balls = [];
 
 function createBalls() {
-    while (balls.length < 25) {
-        const size = random(10, 20);
-        const ball = new Ball(
-            random(size, canvas.width - size),
-            random(size, canvas.height - size),
-            random(-7, 7),
-            random(-7, 7),
-            randomRGB(),
-            size
-        );
-        balls.push(ball);
-    }
+  // Clear existing balls
+  balls.length = 0;
+  
+  // Create new balls appropriate for screen size
+  const ballCount = Math.min(25, Math.max(5, Math.floor((width * height) / 20000)));
+  
+  while (balls.length < ballCount) {
+    const size = random(10, Math.min(20, width / 20, height / 20));
+    const ball = new Ball(
+      // ball position always drawn at least one ball width
+      // away from the edge of the canvas, to avoid drawing errors
+      random(0 + size, width - size),
+      random(0 + size, height - size),
+      random(-7, 7),
+      random(-7, 7),
+      randomRGB(),
+      size
+    );
+
+    balls.push(ball);
+  }
 }
 
-// Reposition balls when screen is resized
-function repositionBalls() {
-    const widthRatio = canvas.width / (canvas.width - 100); // -100 to prevent division by zero
-    const heightRatio = canvas.height / (canvas.height - 100);
-    
-    for (const ball of balls) {
-        // Adjust position proportionally
-        ball.x = Math.max(ball.size, Math.min(canvas.width - ball.size, ball.x * widthRatio));
-        ball.y = Math.max(ball.size, Math.min(canvas.height - ball.size, ball.y * heightRatio));
-        
-        // Adjust size based on screen dimensions (optional)
-        const minDimension = Math.min(canvas.width, canvas.height);
-        ball.size = ball.originalSize * (minDimension / 1000); // Scale based on screen size
-        ball.size = Math.max(8, Math.min(20, ball.size)); // Keep within reasonable bounds
-        
-        // Adjust velocity based on screen size
-        const velocityScale = Math.min(canvas.width, canvas.height) / 800;
-        ball.velX = ball.velX > 0 ? Math.abs(ball.velX) * velocityScale : -Math.abs(ball.velX) * velocityScale;
-        ball.velY = ball.velY > 0 ? Math.abs(ball.velY) * velocityScale : -Math.abs(ball.velY) * velocityScale;
-    }
-}
+// Window resize
+window.addEventListener('resize', function() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+  createBalls();
+});
 
-createBalls();
-
+// Animation loop
 function loop() {
-    ctx.fillStyle = "rgb(0 0 0 / 25%)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgb(0 0 0 / 25%)";
+  ctx.fillRect(0, 0, width, height);
 
-    for (const ball of balls) {
-        ball.draw();
-        ball.update();
-        ball.collisionDetect();
-    }
+  for (const ball of balls) {
+    ball.draw();
+    ball.update();
+    ball.collisionDetect();
+  }
 
-    requestAnimationFrame(loop);
+  requestAnimationFrame(loop);
 }
 
+// Initial setup
+createBalls();
 loop();
