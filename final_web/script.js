@@ -6,8 +6,8 @@ const submitBtn = document.getElementById("submit-btn");
 let phoneDigits = [];
 let currentDigit = 0;
 let escapeMode = true;
-let countdownInterval; // for updating display
-let timeout; // for the actual timeout
+let countdownInterval; // updates timer display
+let timeout; // handles 3s limit
 
 function resetForm() {
   phoneDigits = [];
@@ -22,8 +22,8 @@ function resetForm() {
 }
 
 function updateProgress() {
-  const flames = '🔥'.repeat(currentDigit) + '🕳️'.repeat(10 - currentDigit);
-  progressDisplay.textContent = `Progress: ${flames}`;
+  const entered = phoneDigits.join('');
+  progressDisplay.textContent = `Progress: ${currentDigit} / 10 — Entered: ${entered}`;
 }
 
 function startTimer(duration, onExpire) {
@@ -84,7 +84,7 @@ function createDropdown() {
       updateProgress();
 
       if (currentDigit === 10) {
-        digitZone.innerHTML = `<p class="completion-msg">🔥 Wow. You did it. You entered: ${phoneDigits.join('')} 🔥</p>`;
+        digitZone.innerHTML = `<p class="completion-msg">🎉 You entered: ${phoneDigits.join('')}</p>`;
         timerDisplay.textContent = "";
         submitBtn.style.display = "inline-block";
 
@@ -120,6 +120,6 @@ submitBtn.addEventListener("mouseout", () => {
 });
 
 submitBtn.addEventListener("click", () => {
-  alert("🔥 Thanks for surviving the inferno! You entered: " + phoneDigits.join(''));
+  alert("📞 Thanks! You entered: " + phoneDigits.join(''));
   resetForm();
 });
