@@ -5,25 +5,22 @@ const submitBtn = document.getElementById("submit-btn");
 
 let phoneDigits = [];
 let currentDigit = 0;
-let escapeMode = true;
-let countdownInterval; // updates timer display
-let timeout; // handles 3s limit
+let countdownInterval;
+let timeout;
 
 function resetForm() {
   phoneDigits = [];
   currentDigit = 0;
-  escapeMode = true;
   updateProgress();
   timerDisplay.textContent = "Time left: 3s";
   digitZone.innerHTML = "";
   submitBtn.style.display = "none";
-  submitBtn.style.transform = "translate(0, 0)";
   createDropdown();
 }
 
 function updateProgress() {
   const entered = phoneDigits.join('');
-  progressDisplay.textContent = `Progress: ${currentDigit} / 10 — Entered: ${entered}`;
+  progressDisplay.textContent = `Entered: ${entered}`;
 }
 
 function startTimer(duration, onExpire) {
@@ -87,12 +84,6 @@ function createDropdown() {
         digitZone.innerHTML = `<p class="completion-msg">🎉 You entered: ${phoneDigits.join('')}</p>`;
         timerDisplay.textContent = "";
         submitBtn.style.display = "inline-block";
-
-        escapeMode = true;
-        setTimeout(() => {
-          escapeMode = false;
-          submitBtn.style.transform = "translate(0, 0)";
-        }, 5000);
       } else {
         createDropdown();
       }
@@ -101,23 +92,6 @@ function createDropdown() {
 }
 
 createDropdown();
-
-submitBtn.addEventListener("mouseover", () => {
-  if (escapeMode) {
-    const maxOffsetX = Math.min(400, window.innerWidth - submitBtn.offsetWidth);
-    const maxOffsetY = Math.min(200, window.innerHeight - submitBtn.offsetHeight);
-    const offsetX = Math.random() * maxOffsetX - maxOffsetX / 2;
-    const offsetY = Math.random() * maxOffsetY - maxOffsetY / 2;
-
-    submitBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-  }
-});
-
-submitBtn.addEventListener("mouseout", () => {
-  if (!escapeMode) {
-    submitBtn.style.transform = `translate(0, 0)`;
-  }
-});
 
 submitBtn.addEventListener("click", () => {
   alert("📞 Thanks! You entered: " + phoneDigits.join(''));

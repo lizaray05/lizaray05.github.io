@@ -62,18 +62,21 @@ select {
   cursor: pointer;
   display: none;
   position: relative;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
 #submit-btn:hover {
   background-color: #800000;
 }
 
-#progress {
+#progress,
+#timer {
   font-weight: bold;
-  color: #ff6666;
-  font-size: 1.2em;
-  margin-top: 2vh;
+  color: #ff9999; /* match instruction color */
+  font-size: 1.2em; /* match #instructions */
+  max-width: 90%;
+  margin: 1vh auto 3vh;
+  font-style: italic;
 }
 
 .completion-msg {
