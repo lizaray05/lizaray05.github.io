@@ -1,0 +1,56 @@
+const int BUTTON_PIN = 7;  // Pin where the button is connected
+const int LED_PIN = 10;    // Pin where the LED is connected 
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);  // Button connects to GND when pressed
+  pinMode(LED_PIN, OUTPUT);
+
+  randomSeed(analogRead(A0));  // Random seed from floating analog pin
+
+  Serial.println("==============================");
+  Serial.println("Hello! Welcome to the Game!");
+  Serial.println("LED Reaction Time Challenge");
+  Serial.println("==============================");
+  delay(2000);
+}
+
+void loop() {
+  Serial.println("\nGet Ready...");
+  delay(1000);
+
+  // Random delay before LED turns on (0.5 to 5 seconds)
+  int randomDelay = random(500, 5001);
+  delay(randomDelay);
+
+  // Turn on LED
+  digitalWrite(LED_PIN, HIGH);
+  unsigned long startTime = millis();
+  Serial.println("GO! Press the button NOW!");
+
+  // Wait for button press
+  while (digitalRead(BUTTON_PIN) == HIGH) {
+    // Do nothing, just wait
+  }
+
+  // Simple debounce
+  delay(20); // wait 20ms for button to stabilize
+  while(digitalRead(BUTTON_PIN) == LOW); // wait until button is released
+
+  unsigned long reactionTime = millis() - startTime;
+
+  // Turn off LED
+  digitalWrite(LED_PIN, LOW);
+
+  // Display reaction time
+  Serial.println("==============================");
+  Serial.print("Your reaction time: ");
+  Serial.print(reactionTime);
+  Serial.println(" ms");
+  Serial.println("==============================");
+
+  // Wait before next round
+  Serial.println("\nRound complete!");
+  Serial.println("Next round starting in 5 seconds...");
+  delay(5000);
+}
